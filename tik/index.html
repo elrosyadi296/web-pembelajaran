@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Learning TIK: Perangkat Akses Internet (Kelas IX)</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="../icon/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../icon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../icon/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../icon/apple-touch-icon.png">
+<link rel="manifest" href="../icon/site.webmanifest">
+</head>
+<body>
+    <!-- Modal Input Data Siswa (Dilengkapi Tombol Tutup X & Status Validasi Koneksi) -->
+    <div id="student-modal" class="student-modal-overlay" style="display: none;">
+        <div class="student-modal-card">
+            <button class="modal-close-x" onclick="closeStudentModal()" title="Batal / Tutup Modal">&times;</button>
+            <div class="student-modal-header">
+                <i class="fa-solid fa-id-card"></i>
+                <h2>Data Diri Siswa</h2>
+                <p>Masukkan Nama dan Kelas sebelum memulai Kuis Interaktif</p>
+            </div>
+            <form id="student-form" onsubmit="saveStudentData(event)">
+                <div class="form-group">
+                    <label for="student-name"><i class="fa-solid fa-user"></i> Nama Lengkap</label>
+                    <input type="text" id="student-name" placeholder="Contoh: Budi Santoso" required>
+                </div>
+                <div class="form-group">
+                    <label for="student-class"><i class="fa-solid fa-school"></i> Kelas</label>
+                    <input type="text" id="student-class" placeholder="Contoh: IX A" required>
+                </div>
+
+                <!-- Notifikasi Status Koneksi Spreadsheet -->
+                <div id="connection-status-msg" class="status-alert" style="display: none;"></div>
+
+                <button type="submit" id="submit-student-btn" class="btn btn-primary btn-block">
+                    <i class="fa-solid fa-pen-to-square"></i> Verifikasi & Mulai Kuis
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="brand">
+            <i class="fa-solid fa-network-wired brand-icon"></i>
+            <span class="brand-text">TIK Class IX</span>
+            <button class="toggle-btn" id="toggle-btn" onclick="toggleSidebar()" title="Minimize / Expand Sidebar">
+                <i class="fa-solid fa-chevron-left" id="toggle-icon"></i>
+            </button>
+        </div>
+        <nav class="nav-menu">
+            <a href="#" class="nav-link active" data-target="dashboard" title="Dashboard">
+                <i class="fa-solid fa-house"></i> <span class="link-text">Dashboard</span>
+            </a>
+            <a href="#" class="nav-link" data-target="roadmap" title="Roadmap & Modul">
+                <i class="fa-solid fa-map-location-dot"></i> <span class="link-text">Roadmap & Modul</span>
+            </a>
+            <a href="#" class="nav-link" data-target="hardware" title="Lab Perangkat">
+                <i class="fa-solid fa-microchip"></i> <span class="link-text">Lab Perangkat</span>
+            </a>
+            <a href="#" class="nav-link" data-target="quiz" title="Kuis Interaktif">
+                <i class="fa-solid fa-pen-to-square"></i> <span class="link-text">Kuis Interaktif</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content" id="main-content">
+        <!-- Topbar -->
+        <header class="topbar">
+            <h1 id="page-title">Dashboard Pembelajaran</h1>
+            <div class="user-profile">
+                <i class="fa-solid fa-user-graduate avatar"></i>
+                <div class="user-info">
+                    <span class="user-name" id="display-user-name">Siswa TIK</span>
+                    <span class="user-role" id="display-user-class">SMP/MTs Kelas IX</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- View 1: Dashboard -->
+        <section id="dashboard" class="view-section active">
+            <div class="welcome-card">
+                <div class="welcome-text">
+                    <h2>Selamat Datang di Pembelajaran TIK BAB 3!</h2>
+                    <p>Materi: <strong>Perangkat untuk Mengakses Internet</strong></p>
+                    <button class="btn btn-primary" onclick="navigateTo('roadmap')">Mulai Belajar <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+                <div class="welcome-icon">
+                    <i class="fa-solid fa-globe"></i>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon icon-blue"><i class="fa-solid fa-book-open"></i></div>
+                    <div class="stat-details">
+                        <h3>4 Modul</h3>
+                        <p>Total Sub-Materi</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon icon-green"><i class="fa-solid fa-hard-drive"></i></div>
+                    <div class="stat-details">
+                        <h3>4 Kat. Perangkat</h3>
+                        <p>Input, Proses, Storage, Output</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon icon-orange"><i class="fa-solid fa-check-double"></i></div>
+                    <div class="stat-details">
+                        <h3>10 Soal Kuis</h3>
+                        <p>Evaluasi Pemahaman</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="overview-box">
+                <h3><i class="fa-solid fa-bullseye"></i> Tujuan Pembelajaran</h3>
+                <ul>
+                    <li><i class="fa-solid fa-check text-success"></i> Memahami fungsi perangkat keras input, proses, penyimpanan, dan output.</li>
+                    <li><i class="fa-solid fa-check text-success"></i> Memahami peran penting Modem dan Saluran Telepon untuk koneksi internet.</li>
+                    <li><i class="fa-solid fa-check text-success"></i> Membedakan memori RAM & ROM serta monitor CRT & LCD.</li>
+                    <li><i class="fa-solid fa-check text-success"></i> Menerapkan standar Keselamatan dan Kesehatan Kerja (K3) TIK.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- View 2: Roadmap & Modul -->
+        <section id="roadmap" class="view-section">
+            <h2>Roadmap Pembelajaran BAB 3</h2>
+            <p class="subtitle">Ikuti alur belajar bertahap di bawah ini untuk menguasai materi secara utuh.</p>
+            
+            <div class="roadmap-container">
+                <!-- Step 1 -->
+                <div class="roadmap-step" onclick="showModule(1)">
+                    <div class="step-badge">Pekan 1</div>
+                    <div class="step-content">
+                        <h3>1. Perangkat Input & Akses Internet</h3>
+                        <p>Keyboard, Mouse (Klik/Pointer), dan Modem (Modulasi Demodulasi / Internal-Eksternal).</p>
+                        <span class="badge-tag">Konseptual & Praktis</span>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="roadmap-step" onclick="showModule(2)">
+                    <div class="step-badge">Pekan 2</div>
+                    <div class="step-content">
+                        <h3>2. Perangkat Proses (CPU) & Memori</h3>
+                        <p>CPU (Control Unit & ALU), ROM (Permanen), RAM (Sementara/Volatile).</p>
+                        <span class="badge-tag">Analisis Komponen</span>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="roadmap-step" onclick="showModule(3)">
+                    <div class="step-badge">Pekan 3</div>
+                    <div class="step-content">
+                        <h3>3. Perangkat Penyimpanan (Storage)</h3>
+                        <p>Harddisk (Sistem Operasi), Compact Disk (CD/CD-RW), Flash Disk (USB Port).</p>
+                        <span class="badge-tag">Penyimpanan Data</span>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="roadmap-step" onclick="showModule(4)">
+                    <div class="step-badge">Pekan 4</div>
+                    <div class="step-content">
+                        <h3>4. Perangkat Keluaran (Output) & K3</h3>
+                        <p>Monitor (CRT vs LCD), Printer (Dot Matrix, InkJet, LaserJet), Speaker, serta Aturan K3.</p>
+                        <span class="badge-tag">Output & Keselamatan</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal / Detail Modul -->
+            <div id="module-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-btn" onclick="closeModule()">&times;</span>
+                    <h3 id="module-title">Judul Modul</h3>
+                    <hr>
+                    <div id="module-body">
+                        <!-- Content via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- View 3: Lab Perangkat Interaktif -->
+        <section id="hardware" class="view-section">
+            <h2>Lab Perangkat Keras Komputer & Internet</h2>
+            <p class="subtitle">Klik pada salah satu kategori perangkat untuk melihat penjelasan ringkas, fungsi, dan contoh gambarnya.</p>
+
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterHardware('all', event)">Semua Perangkat</button>
+                <button class="filter-btn" onclick="filterHardware('input', event)">Input & Internet</button>
+                <button class="filter-btn" onclick="filterHardware('process', event)">Proses & Memori</button>
+                <button class="filter-btn" onclick="filterHardware('storage', event)">Penyimpanan</button>
+                <button class="filter-btn" onclick="filterHardware('output', event)">Keluaran</button>
+            </div>
+
+            <div class="hardware-grid" id="hardware-grid">
+                <!-- Hardware items rendered by JS -->
+            </div>
+        </section>
+
+        <!-- View 4: Kuis Interaktif -->
+        <section id="quiz" class="view-section">
+            <h2>Kuis Evaluasi Pemahaman BAB 3</h2>
+            <p class="subtitle">Uji pemahamanmu berdasarkan materi dalam bahan ajar PDF! (10 Soal)</p>
+
+            <div class="quiz-container">
+                <div id="quiz-start-screen" class="quiz-start-box">
+                    <i class="fa-solid fa-clipboard-question"></i>
+                    <h3>Siap Menguji Pemahamanmu?</h3>
+                    <p>Kuis terdiri dari 10 soal pilihan ganda. Sistem akan memverifikasi koneksi Google Spreadsheet saat kamu memasukkan data diri.</p>
+                    <button class="btn btn-primary" onclick="openStudentModal()">
+                        <i class="fa-solid fa-user-pen"></i> Isi Data & Mulai Kuis
+                    </button>
+                </div>
+
+                <div id="quiz-body" style="display: none;">
+                    <div class="quiz-progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <div class="quiz-header-info">
+                        <span id="quiz-counter">Soal 1 dari 10</span>
+                    </div>
+                    <div class="quiz-question" id="quiz-question">Pertanyaan kuis akan muncul di sini...</div>
+                    <div class="quiz-options" id="quiz-options">
+                        <!-- Options generated by JS -->
+                    </div>
+                    <button class="btn btn-primary" id="next-quiz-btn" style="display:none;" onclick="nextQuestion()">
+                        Soal Berikutnya <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <div id="quiz-result" style="display: none;" class="quiz-result-box">
+                    <i class="fa-solid fa-trophy"></i>
+                    <h3>Hasil Kuis Anda</h3>
+                    <p id="quiz-student-info" class="student-result-info"></p>
+                    <div class="score-badge" id="quiz-score-badge">0 / 100</div>
+                    <p id="quiz-score-text">Skor Anda: 0 / 10</p>
+                    <p id="google-sheet-status" class="sheet-status"></p>
+                    <button class="btn btn-primary" onclick="resetQuiz()">Ulangi Kuis</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

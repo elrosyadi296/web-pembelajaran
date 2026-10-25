@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Ketik Cepat</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            background: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 25px;
+            background: white;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+        }
+        .user-info-bar {
+            background: #e9ecef;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .image-container img {
+            width: 100%;
+            max-width: 380px;
+            border-radius: 8px;
+        }
+        .captcha-box {
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            padding: 12px;
+            background: #222;
+            color: #00ffcc;
+            border-radius: 6px;
+            margin: 15px 0;
+            user-select: none;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            text-align: center;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        input[type="text"]:focus, input[type="number"]:focus {
+            border-color: #007bff;
+            box-shadow: 0px 0px 6px rgba(0, 123, 255, 0.4);
+        }
+        .timer {
+            font-size: 22px;
+            font-weight: bold;
+            color: #dc3545;
+            margin: 10px 0;
+        }
+        .score {
+            font-size: 18px;
+            font-weight: bold;
+            color: #28a745;
+            margin-top: 15px;
+        }
+
+        /* Styling Modal Pop-Up */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 420px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            text-align: left;
+        }
+        .modal-content h3 {
+            margin-top: 0;
+            color: #333;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+        .form-group input {
+            text-align: left;
+        }
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #218838;
+        }
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .result-detail {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 15px;
+        }
+        .result-detail p {
+            margin: 6px 0;
+        }
+    </style>
+    <link rel="icon" type="image/x-icon" href="../icon/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../icon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../icon/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../icon/apple-touch-icon.png">
+<link rel="manifest" href="../icon/site.webmanifest">
+</head>
+<body>
+
+    <!-- Main App Container -->
+    <div class="container">
+        <div class="user-info-bar">
+            <span><i class="fa fa-user"></i> <strong id="display-nama">-</strong></span>
+            <span><i class="fa fa-graduation-cap"></i> <strong id="display-kelas">-</strong></span>
+        </div>
+
+        <div class="image-container">
+            <img src="mengetik.gif" alt="Panduan Jari untuk Mengetik">
+        </div>
+
+        <div class="timer">Waktu: <span id="time">60</span> detik</div>
+        <div class="captcha-box" id="captcha">Loading...</div>
+        <input type="text" id="user-input" placeholder="Ketik captcha di atas lalu tekan enter/otomatis..." disabled>
+        <div class="score">Captcha Berhasil: <span id="score">0</span></div>
+    </div>
+
+    <!-- Modal 1: Input Data Diri & Pengaturan Waktu -->
+    <div id="start-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3><i class="fa fa-keyboard"></i> Mulai Latihan Ketik</h3>
+            <form id="start-form">
+                <div class="form-group">
+                    <label for="input-nama">Nama Lengkap:</label>
+                    <input type="text" id="input-nama" placeholder="Masukkan nama Anda..." required>
+                </div>
+                <div class="form-group">
+                    <label for="input-kelas">Kelas:</label>
+                    <input type="text" id="input-kelas" placeholder="Contoh: X IPA 1" required>
+                </div>
+                <div class="form-group">
+                    <label for="input-timer">Durasi Waktu (Detik):</label>
+                    <input type="number" id="input-timer" value="60" min="5" max="600" required>
+                </div>
+                <button type="submit" class="btn btn-primary"><i class="fa fa-play"></i> Mulai Latihan</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal 2: Hasil Latihan & Submit -->
+    <div id="result-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3><i class="fa fa-trophy"></i> Waktu Habis!</h3>
+            <div class="result-detail">
+                <p><strong>Nama:</strong> <span id="res-nama"></span></p>
+                <p><strong>Kelas:</strong> <span id="res-kelas"></span></p>
+                <p><strong>Jumlah Captcha Selesai:</strong> <span id="res-score" style="color:#28a745; font-weight:bold;">0</span></p>
+                <p><strong>Durasi:</strong> <span id="res-duration"></span> detik</p>
+            </div>
+            <button id="btn-submit-data" class="btn btn-success"><i class="fa fa-paper-plane"></i> Kirim Hasil</button>
+            <button id="btn-restart" class="btn btn-secondary"><i class="fa fa-rotate-right"></i> Ulangi Latihan</button>
+        </div>
+    </div>
+
+    <!-- Modal 3: Notifikasi Keberhasilan -->
+    <div id="success-modal" class="modal-overlay hidden">
+        <div class="modal-content" style="text-align: center;">
+            <i class="fa fa-circle-check" style="font-size: 50px; color: #28a745; margin-bottom: 15px;"></i>
+            <h3>Berhasil!</h3>
+            <p>Data latihan Anda berhasil dikirim.</p>
+            <button id="btn-close-success" class="btn btn-primary">OK / Latihan Lagi</button>
+        </div>
+    </div>
+
+    <script>
+        // URL Google Apps Script Web App Anda
+        // Ganti URL di bawah ini setelah melakukan Deploy Google Apps Script
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyDgarYSJ3usDa4yKgty7m9x_SrgHa8sGfT3z1XOTnQ2ZiWktYiUyjgpWRd1IFADCZN2g/exec";
+
+        let timerDuration = 60;
+        let timerLeft = 60;
+        let timerInterval = null;
+        let score = 0;
+        let captchaText = "";
+        let namaUser = "";
+        let kelasUser = "";
+        const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        // Element Referensi
+        const startModal = document.getElementById("start-modal");
+        const resultModal = document.getElementById("result-modal");
+        const successModal = document.getElementById("success-modal");
+        const startForm = document.getElementById("start-form");
+        const userInput = document.getElementById("user-input");
+        const captchaEl = document.getElementById("captcha");
+        const scoreEl = document.getElementById("score");
+        const timeEl = document.getElementById("time");
+
+        // Modal Start Submit Handler
+        startForm.addEventListener("submit", function(e) {
+            e.preventDefault();
+            namaUser = document.getElementById("input-nama").value.trim();
+            kelasUser = document.getElementById("input-kelas").value.trim();
+            timerDuration = parseInt(document.getElementById("input-timer").value) || 60;
+            
+            document.getElementById("display-nama").innerText = namaUser;
+            document.getElementById("display-kelas").innerText = kelasUser;
+            
+            startModal.classList.add("hidden");
+            initGame();
+        });
+
+        function generateCaptcha() {
+            let text = "";
+            for (let i = 0; i < 6; i++) {
+                text += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            captchaEl.innerText = text;
+            captchaText = text;
+        }
+
+        userInput.addEventListener("input", function() {
+            if (this.value === captchaText) {
+                score++;
+                scoreEl.innerText = score;
+                this.value = "";
+                generateCaptcha();
+            }
+        });
+
+        function initGame() {
+            score = 0;
+            scoreEl.innerText = score;
+            timerLeft = timerDuration;
+            timeEl.innerText = timerLeft;
+            userInput.disabled = false;
+            userInput.value = "";
+            userInput.focus();
+            generateCaptcha();
+            startTimer();
+        }
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                if (timerLeft > 0) {
+                    timerLeft--;
+                    timeEl.innerText = timerLeft;
+                } else {
+                    clearInterval(timerInterval);
+                    userInput.disabled = true;
+                    showResultModal();
+                }
+            }, 1000);
+        }
+
+        function showResultModal() {
+            document.getElementById("res-nama").innerText = namaUser;
+            document.getElementById("res-kelas").innerText = kelasUser;
+            document.getElementById("res-score").innerText = score;
+            document.getElementById("res-duration").innerText = timerDuration;
+            
+            const btnSubmit = document.getElementById("btn-submit-data");
+            btnSubmit.disabled = false;
+            btnSubmit.innerHTML = '<i class="fa fa-paper-plane"></i> Kirim Hasil';
+            
+            resultModal.classList.remove("hidden");
+        }
+
+        // Action Buttons
+        document.getElementById("btn-restart").addEventListener("click", function() {
+            resultModal.classList.add("hidden");
+            initGame();
+        });
+
+        document.getElementById("btn-submit-data").addEventListener("click", function() {
+            const btnSubmit = this;
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Mengirim...';
+
+            const payload = {
+                nama: namaUser,
+                kelas: kelasUser,
+                skor: score,
+                durasi: timerDuration,
+                waktu: new Date().toLocaleString("id-ID")
+            };
+
+            // Mengirim data ke Google Apps Script (Spreadsheet)
+            fetch(SCRIPT_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(() => {
+                resultModal.classList.add("hidden");
+                successModal.classList.remove("hidden");
+            })
+            .catch(error => {
+                alert("Gagal mengirim data: " + error);
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = '<i class="fa fa-paper-plane"></i> Kirm Hasil';
+            });
+        });
+
+        document.getElementById("btn-close-success").addEventListener("click", function() {
+            successModal.classList.add("hidden");
+            startModal.classList.remove("hidden");
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "name": "Belajar - Portal Pembelajaran",
+  "short_name": "Belajar",
+  "description": "Portal pilihan modul pembelajaran interaktif dengan tampilan rak buku 3D bertema Saweria.",
+  "start_url": "../index.html",
+  "display": "standalone",
+  "background_color": "#141417",
+  "theme_color": "#FF7A00",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

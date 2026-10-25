@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Pembelajaran</title>
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Meta Tags Utama -->
+<meta name="title" content="Belajar - Portal Rak Buku Pembelajaran">
+<meta name="description" content="Portal pilihan modul pembelajaran interaktif dengan tampilan rak buku 3D. Akses berbagai materi pembelajaran dengan mudah dan cepat.">
+<meta name="keywords" content="portal pembelajaran, rak buku 3d, modul belajar, materi interaktif, edukasi online, belajar daring, rak buku digital, modul pembelajaran, belajar interaktif, portal edukasi">
+<meta name="author" content="Belajar by 296Studios">
+<meta name="robots" content="index, follow">
+
+<!-- Warna Bar Browser Seluler (Tema Oranye Saweria) -->
+<meta name="theme-color" content="#FF7A00">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://belajar.296.web.id/">
+<meta property="og:title" content="Belajar - Portal Rak Buku Pembelajaran">
+<meta property="og:description" content="Akses berbagai modul pembelajaran interaktif dengan tampilan rak buku 3D yang modern dan responsif.">
+<meta property="og:image" content="https://belajar.296.web.id/og-image.webp">
+
+<!-- Twitter Card -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://belajar.296.web.id/">
+<meta property="twitter:title" content="Belajar - Portal Rak Buku Pembelajaran">
+<meta property="twitter:description" content="Akses berbagai modul pembelajaran interaktif dengan tampilan rak buku 3D yang modern dan responsif.">
+<meta property="twitter:image" content="https://belajar.296.web.id/og-image.webp">
+
+<!-- Favicon Langsung Aktif (SVG Data URI Icon Buku Oranye) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23FF7A00'/><path d='M30 25h40a5 5 0 0 1 5 5v45a5 5 0 0 1-5 5H30a5 5 0 0 1-5-5V30a5 5 0 0 1 5-5z' fill='%23ffffff'/><path d='M35 35h30M35 47h30M35 59h20' stroke='%23FF7A00' stroke-width='4' stroke-linecap='round'/></svg>">
+
+<!-- Standard Favicon (Jika Menggunakan File Gambar Lokal) -->
+<link rel="icon" type="image/x-icon" href="icon/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="icon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="icon/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icon/apple-touch-icon.png">
+<link rel="manifest" href="icon/site.webmanifest">
+</head>
+<body class="dark-theme">
+
+    <!-- Header / Navbar Tema Saweria -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="brand">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-book-bookmark"></i>
+                </div>
+                <div class="brand-text">
+                    <span class="brand-title">Bel<span class="highlight">ajar</span></span>
+                    <span class="brand-badge">by 296Studios</span>
+                </div>
+            </div>
+
+            <div class="nav-search">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="searchInput" placeholder="Cari modul pembelajaran, topik, atau kata kunci...">
+                <button id="clearSearchBtn" class="btn-icon hidden"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="nav-actions">
+                <button id="themeToggleBtn" class="btn btn-secondary" title="Ganti Mode Terang/Gelap">
+                    <i class="fa-solid fa-moon" id="themeIcon"></i>
+                </button>
+                <button id="addBookBtn" class="btn btn-primary">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Tambah Buku</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <!-- Banner Hero & Stats -->
+        <section class="hero-section">
+            <div class="hero-card">
+                <div class="hero-info">
+                    <div class="hero-badge"><i class="fa-solid fa-fire"></i>Learning Hub</div>
+                    <h1>Rak Buku Pembelajaran Interaktif</h1>
+                    <p>Pilih modul materi pembelajaran di bawah ini. Klik pada buku untuk melihat detail portal dan langsung menuju laman pembelajaran yang dituju!</p>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-value" id="totalBooksCount">0</span>
+                        <span class="stat-label">Total Modul</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="completedCount">0</span>
+                        <span class="stat-label">Selesai</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="avgProgress">0%</span>
+                        <span class="stat-label">Progres Rata-rata</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Kategori & Filter Tampilan -->
+        <section class="controls-section">
+            <div class="categories-wrapper">
+                <button class="cat-chip active" data-category="all">
+                    <i class="fa-solid fa-border-all"></i> Semua
+                </button>
+                <button class="cat-chip" data-category="TIK">
+                    <i class="fa-solid fa-laptop"></i> TIK
+                </button>
+                <button class="cat-chip" data-category="Social">
+                    <i class="fa-solid fa-user-group"></i> Social
+                </button>
+                <button class="cat-chip" data-category="Sains & Math">
+                    <i class="fa-solid fa-square-root-variable"></i> Sains & Math
+                </button>
+                <button class="cat-chip" data-category="Bahasa">
+                    <i class="fa-solid fa-language"></i> Bahasa
+                </button>
+                <button class="cat-chip" data-category="favorit">
+                    <i class="fa-solid fa-star"></i> Favorit Saya
+                </button>
+            </div>
+
+            <div class="view-modes">
+                <span class="control-label">Tampilan:</span>
+                <button class="view-btn active" id="viewShelfBtn" data-view="shelf" title="Tampilan Rak Buku 3D">
+                    <i class="fa-solid fa-cubes"></i> Rak 3D
+                </button>
+                <button class="view-btn" id="viewGridBtn" data-view="grid" title="Tampilan Grid Kartu">
+                    <i class="fa-solid fa-table-cells"></i> Grid
+                </button>
+            </div>
+        </section>
+
+        <!-- Area Rak Buku (Dynamic Render) -->
+        <section id="bookshelfContainer" class="bookshelf-view">
+            <!-- Rak dan Buku akan di-render oleh script.js -->
+        </section>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="empty-state hidden">
+            <div class="empty-icon"><i class="fa-solid fa-box-open"></i></div>
+            <h3>Buku Pembelajaran Tidak Ditemukan</h3>
+            <p>Coba gunakan kata kunci pencarian lain atau pilih kategori yang berbeda.</p>
+            <button id="resetFilterBtn" class="btn btn-primary mt-3">Reset Filter & Search</button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <i class="fa-solid fa-book-bookmark text-primary"></i>
+                <span>Portal Rak Buku Pembelajaran</span>
+            </div>
+            <p>© 2026 Belajar by 296Studios</p>
+        </div>
+    </footer>
+
+    <!-- Modal Detail Buku & Link Portal Target -->
+    <div id="bookModal" class="modal-backdrop hidden">
+        <div class="modal-box popup-anim">
+            <button class="modal-close" id="closeBookModal"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-header">
+                <span class="modal-tag" id="modalCategory">Kategori</span>
+                <h2 id="modalTitle">Judul Buku</h2>
+                <div class="modal-meta">
+                    <span id="modalLevel"><i class="fa-solid fa-layer-group"></i> Pemula</span>
+                    <span id="modalDuration"><i class="fa-solid fa-clock"></i> 2 Jam</span>
+                    <span id="modalAuthor"><i class="fa-solid fa-user"></i> Pengajar</span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <p id="modalDescription">Deskripsi materi pembelajaran...</p>
+                
+                <div class="modal-progress-box">
+                    <div class="progress-info">
+                        <span>Progres Belajar</span>
+                        <span id="modalProgressText">0%</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="modalProgressBar" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <div class="modal-topics">
+                    <h4><i class="fa-solid fa-list-check"></i> Topik Yang Dipelajari:</h4>
+                    <ul id="modalTopicsList"></ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="toggleFavBtn" class="btn btn-secondary">
+                    <i class="fa-regular fa-star" id="modalFavIcon"></i> Favorit
+                </button>
+                <a id="modalOpenLink" href="#" target="_self" class="btn btn-primary btn-launch">
+                    <span>Masuk ke Laman Materi</span>
+                    <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Tambah Buku Baru -->
+    <div id="addBookModal" class="modal-backdrop hidden">
+        <div class="modal-box popup-anim">
+            <button class="modal-close" id="closeAddModal"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-plus-circle text-primary"></i> Tambah Buku Pembelajaran Baru</h2>
+                <p>Tambahkan tautan/portal modul baru ke dalam rak buku Anda.</p>
+            </div>
+            <form id="addBookForm">
+                <div class="form-group">
+                    <label for="bookTitle">Judul Buku / Modul *</label>
+                    <input type="text" id="bookTitle" placeholder="Contoh: Belajar JavaScript DOM" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bookCategory">Kategori *</label>
+                        <select id="bookCategory" required>
+                            <option value="TIK">TIK</option>
+                            <option value="Social">Social</option>
+                            <option value="Sains & Math">Sains & Math</option>
+                            <option value="Bahasa">Bahasa</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bookColor">Warna Sampul Buku</label>
+                        <div class="color-picker-grid">
+                            <input type="radio" name="spineColor" value="#FF7A00" id="c1" checked><label for="c1" style="background:#FF7A00;"></label>
+                            <input type="radio" name="spineColor" value="#00C853" id="c2"><label for="c2" style="background:#00C853;"></label>
+                            <input type="radio" name="spineColor" value="#29B6F6" id="c3"><label for="c3" style="background:#29B6F6;"></label>
+                            <input type="radio" name="spineColor" value="#AB47BC" id="c4"><label for="c4" style="background:#AB47BC;"></label>
+                            <input type="radio" name="spineColor" value="#FF1744" id="c5"><label for="c5" style="background:#FF1744;"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="bookUrl">URL Target / Link Portal *</label>
+                    <input type="text" id="bookUrl" placeholder="modul-web.html atau https://..." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="bookDesc">Deskripsi Singkat</label>
+                    <textarea id="bookDesc" rows="3" placeholder="Jelaskan ringkasan materi yang dipelajari..."></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bookLevel">Tingkat Kesulitan</label>
+                        <select id="bookLevel">
+                            <option value="Pemula">Pemula</option>
+                            <option value="Menengah">Menengah</option>
+                            <option value="Lanjutan">Lanjutan</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bookDuration">Estimasi Waktu</label>
+                        <input type="text" id="bookDuration" placeholder="Contoh: 1.5 Jam">
+                    </div>
+                </div>
+
+                <div class="modal-footer pt-3">
+                    <button type="button" class="btn btn-secondary" id="cancelAddBtn">Batal</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Simpan ke Rak</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden">
+        <i class="fa-solid fa-circle-check" id="toastIcon"></i>
+        <span id="toastMsg">Notifikasi</span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
