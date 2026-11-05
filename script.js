@@ -31,6 +31,20 @@ const initialBooks = [
         progress: 40,
         isFavorite: false,
         topics: ["Mengetik", "Typing","Testing"]
+    },
+    {
+        id: "book-3",
+        title: "Soal Latihan Qur'an Hadits",
+        category: "Sosial",
+        color: "#AB47BC",
+        url: "soal-latihan-quran-hadits",
+        description: "Latihan soal tentang Qur'an dan Hadits.",
+        level: "Menengah",
+        duration: "2.5 Jam",
+        author: "Tim 296Studios",
+        progress: 40,
+        isFavorite: false,
+        topics: ["Qur'an", "Hadits","Testing"]
     }
 ];
 

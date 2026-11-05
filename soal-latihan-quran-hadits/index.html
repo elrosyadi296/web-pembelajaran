@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Soal Qur'an Hadits</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <!-- Meta Tags Utama -->
+<meta name="title" content="Belajar - Portal Rak Buku Pembelajaran">
+<meta name="description" content="Portal pilihan modul pembelajaran interaktif dengan tampilan rak buku 3D. Akses berbagai materi pembelajaran dengan mudah dan cepat.">
+<meta name="keywords" content="portal pembelajaran, rak buku 3d, modul belajar, materi interaktif, edukasi online, belajar daring, rak buku digital, modul pembelajaran, belajar interaktif, portal edukasi">
+<meta name="author" content="Belajar by 296Studios">
+<meta name="robots" content="index, follow">
+
+<!-- Warna Bar Browser Seluler (Tema Oranye Saweria) -->
+<meta name="theme-color" content="#FF7A00">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://belajar.296.web.id/">
+<meta property="og:title" content="Belajar - Portal Rak Buku Pembelajaran">
+<meta property="og:description" content="Akses berbagai modul pembelajaran interaktif dengan tampilan rak buku 3D yang modern dan responsif.">
+<meta property="og:image" content="https://belajar.296.web.id/og-image.webp">
+
+<!-- Twitter Card -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://belajar.296.web.id/">
+<meta property="twitter:title" content="Belajar - Portal Rak Buku Pembelajaran">
+<meta property="twitter:description" content="Akses berbagai modul pembelajaran interaktif dengan tampilan rak buku 3D yang modern dan responsif.">
+<meta property="twitter:image" content="https://belajar.296.web.id/og-image.webp">
+
+<!-- Favicon Langsung Aktif (SVG Data URI Icon Buku Oranye) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23FF7A00'/><path d='M30 25h40a5 5 0 0 1 5 5v45a5 5 0 0 1-5 5H30a5 5 0 0 1-5-5V30a5 5 0 0 1 5-5z' fill='%23ffffff'/><path d='M35 35h30M35 47h30M35 59h20' stroke='%23FF7A00' stroke-width='4' stroke-linecap='round'/></svg>">
+
+<!-- Standard Favicon (Jika Menggunakan File Gambar Lokal) -->
+<link rel="icon" type="image/x-icon" href="../icon/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../icon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../icon/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../icon/apple-touch-icon.png">
+<link rel="manifest" href="../icon/site.webmanifest">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Modern Card Container -->
+        <div class="quiz-card">
+            <!-- Form Identitas -->
+            <div id="start-screen" class="screen active">
+                <div class="header">
+                    <h2>Latihan Soal Qur'an Hadits</h2>
+                    <p>Silakan isi data diri sebelum memulai latihan.</p>
+                </div>
+                <form id="identity-form">
+                    <div class="input-group">
+                        <label for="student-name">Nama Lengkap</label>
+                        <input type="text" id="student-name" placeholder="Masukkan nama Anda" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="student-class">Kelas / Rombel</label>
+                        <input type="text" id="student-class" placeholder="Contoh: IX-A" required>
+                    </div>
+                    <button type="submit" class="btn primary-btn">Mulai Mengerjakan</button>
+                </form>
+            </div>
+
+            <!-- Screen Soal -->
+            <div id="quiz-screen" class="screen">
+                <div class="quiz-header">
+                    <div class="progress-bar-container">
+                        <div id="progress-bar" class="progress-bar"></div>
+                    </div>
+                    <div class="meta-info">
+                        <span id="question-number">Soal 1 dari 38</span>
+                        <span id="timer">⏱️ 00:00</span>
+                    </div>
+                </div>
+
+                <div class="question-container">
+                    <h3 id="question-text">Teks soal akan muncul di sini...</h3>
+                    <div id="options-container" class="options-grid"></div>
+                </div>
+
+                <div class="quiz-footer">
+                    <button id="prev-btn" class="btn secondary-btn" disabled>Kembali</button>
+                    <button id="next-btn" class="btn primary-btn">Berikutnya</button>
+                    <button id="submit-btn" class="btn success-btn hidden">Selesai & Kirim</button>
+                </div>
+            </div>
+
+            <!-- Screen Hasil -->
+            <div id="result-screen" class="screen">
+                <div class="result-box">
+                    <div class="icon">🎉</div>
+                    <h2>Latihan Selesai!</h2>
+                    <p id="result-message">Jawaban Anda sedang dikirim ke sistem...</p>
+                    <div class="score-display">
+                        <span>Nilai Anda</span>
+                        <h1 id="score-text">0</h1>
+                    </div>
+                    <div class="detail-stats">
+                        <div class="stat"><span>Benar</span><strong id="correct-count">0</strong></div>
+                        <div class="stat"><span>Salah</span><strong id="wrong-count">0</strong></div>
+                    </div>
+                    <button onclick="location.reload()" class="btn primary-btn" style="margin-top: 20px;">Coba Lagi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/questions.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
