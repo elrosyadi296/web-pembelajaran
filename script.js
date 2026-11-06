@@ -1,7 +1,3 @@
-/**
- * PORTAL PEMBELAJARAN RAK BUKU - SAWERIA THEME
- */
-
 // Data Awal Buku & Target Portal
 const initialBooks = [
     {
